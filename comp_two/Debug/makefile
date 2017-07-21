@@ -25,8 +25,8 @@ endif
 all: comp_two
 
 dependents:
-	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) clean all
-	-cd /home/acurnutt/workspace/SocketUtils/Debug && $(MAKE) clean all
+	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) all
+	-cd /home/acurnutt/workspace/SocketUtils/Debug && $(MAKE) all
 
 # Tool invocations
 comp_two: $(OBJS) $(USER_OBJS) /home/acurnutt/workspace/StdUtils/Debug/libStdUtils.a /home/acurnutt/workspace/SocketUtils/Debug/libSocketUtils.a

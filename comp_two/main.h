@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
@@ -19,5 +20,7 @@
 
 #define MAX_CONN 10
 #define BUFFER 10
+#define TRUE 1
+#define FALSE 0
 
 #endif /* MAIN_H_ */

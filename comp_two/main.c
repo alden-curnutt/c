@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	int server_fd = 0, client_fd = 0, data_size = 0;
 	socklen_t client_len;
 	struct sockaddr_in serv_addr, client_addr;
-	char buffer[BUFFER];
+	char * buffer = {0};
 
 	SocketUtils_countArgs(argc);
 	SocketUtils_checkPort( argv, &port_no );
@@ -24,7 +24,6 @@ int main(int argc, char **argv)
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 
 	SocketUtils_createSocket(&server_fd);
-	printf("sock_fd is %d\n", server_fd);
 
 
 
@@ -68,21 +67,74 @@ int main(int argc, char **argv)
 		}
 		//printf("after accept\n");
 
+
+
+
+
+		buffer = (char *)calloc(BUFFER, sizeof(char));
 		while (1)
 		{
 
 
-			if ( !(data_size = recv(client_fd, buffer, BUFFER, 0)) )
-				break;
 
-			if ( data_size < 0 )
-			{
-				printf("Error reading client data\n");
-				exit(1);
-			}
+			const char newline = '\n';
+			char *return_ptr;
 
 
-			printf("data size: %d\nbuffer   : %s\n", data_size, buffer);
+			do {
+
+				printf("starting do while loop\n");
+
+				data_size = recv(client_fd, buffer, BUFFER, 0);
+				printf("temp recv data size is: %d\n", data_size);
+				if ( data_size == 0 )
+					break;
+
+				printf("data size: %d\nbuffer   : %s\n", data_size, buffer);
+
+
+				if ( data_size < 0 )
+				{
+					printf("Error reading client data\n");
+					exit(1);
+				}
+
+
+
+
+
+				//if ( (return_ptr = strchr(buffer, newline)) )
+
+
+
+				if ( data_size == BUFFER )
+				{
+					printf("before realloc buffer is %s\n", buffer);
+					printf("More data to come. Size of buffer before realloc is: %lu\n", sizeof(buffer));
+					buffer = realloc(buffer, BUFFER);
+					printf("Buffer resized. Size of buffer after realloc is: %lu\n", sizeof(buffer));
+					printf("after realloc buffer is %s\n", buffer);
+				}
+				else
+				{
+					printf("data was shorter than buffer size\n");
+					break;
+				}
+
+				printf("ending do while loop\n");
+
+
+				if (data_size < BUFFER)
+					break;
+
+			} while ( 1 );
+
+			printf("after loop buffer is %s\n\n", buffer);
+			break;
+
+
+
+
 		}
 
 
