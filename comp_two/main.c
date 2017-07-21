@@ -72,13 +72,12 @@ int main(int argc, char **argv)
 
 
 		buffer = (char *)calloc(BUFFER, sizeof(char));
+		int currentBufferSize = BUFFER;
 		while (1)
 		{
 
 
 
-			const char newline = '\n';
-			char *return_ptr;
 
 
 			do {
@@ -109,23 +108,30 @@ int main(int argc, char **argv)
 
 				if ( data_size == BUFFER )
 				{
+
+					printf("currentBufferSize %d\n", currentBufferSize);
+					currentBufferSize += BUFFER;
+					printf("currentBufferSize %d\n", currentBufferSize);
+
+
 					printf("before realloc buffer is %s\n", buffer);
 					printf("More data to come. Size of buffer before realloc is: %lu\n", sizeof(buffer));
-					buffer = realloc(buffer, BUFFER);
+
+					buffer = realloc(buffer, currentBufferSize);
 					printf("Buffer resized. Size of buffer after realloc is: %lu\n", sizeof(buffer));
 					printf("after realloc buffer is %s\n", buffer);
+
+
+
 				}
-				else
-				{
-					printf("data was shorter than buffer size\n");
+				else if (data_size < BUFFER)
 					break;
-				}
+
 
 				printf("ending do while loop\n");
 
 
-				if (data_size < BUFFER)
-					break;
+
 
 			} while ( 1 );
 
