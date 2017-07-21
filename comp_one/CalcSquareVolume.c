@@ -25,7 +25,7 @@ void calcVolume()
 
 	do {
 		printf("Enter length of a cube's side\n> ");
-		dblChoice = validateDbl(userChoice, MAX_CHOICE_LEN, 1, 1);
+		dblChoice = StdUtils_isDblFromInput(userChoice, MAX_CHOICE_LEN, 1, 1);
 	} while ( dblChoice == 0.0 );
 
 	volume = dblChoice * dblChoice * dblChoice;

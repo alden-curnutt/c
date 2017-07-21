@@ -28,7 +28,8 @@ void printMainMenu()
 int main()
 {
 	char * userChoice = {0}; // buffer containing user string
-	long longChoice = 0; // endpoint for user's input
+	userChoice = (char *)calloc(MAX_CHOICE_LEN, sizeof(char));
+	long longChoice = 0; // end point for user's input
 	time_t t;
 	srand((unsigned) time(&t)); // seeding srand
 
@@ -40,10 +41,10 @@ int main()
 	//TODO:  change to while(1) and use a break to escape loop
 	{
 		printMainMenu();
-		userChoice = (char *)calloc(MAX_CHOICE_LEN, sizeof(char));
+
 
 		do {
-			longChoice = (validateInt(userChoice, MAX_CHOICE_LEN, 1, 5));
+			longChoice = (StdUtils_isIntFromInput(userChoice, MAX_CHOICE_LEN, 1, 5));
 		} while ( longChoice == 0 );  //ValidateInt returns long, you are checking for a float here
 
 		switch ( longChoice )
@@ -71,18 +72,3 @@ int main()
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

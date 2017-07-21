@@ -23,7 +23,7 @@ void StdUtils_flushStdin( char *str )
 }
 
 
-long StdUtils_checkInt(char *str, int buffSize, int min, int max)
+long StdUtils_isInt(char *str, int buffSize, int min, int max)
 {
 	/**
 	 * Validate input is a long
@@ -51,7 +51,7 @@ long StdUtils_checkInt(char *str, int buffSize, int min, int max)
 }
 
 
-long StdUtils_checkIntFromInput(char *str, int buffSize, int min, int max)
+long StdUtils_isIntFromInput(char *str, int buffSize, int min, int max)
 {
 	/**
 	 * Validate input is a long
@@ -83,7 +83,7 @@ long StdUtils_checkIntFromInput(char *str, int buffSize, int min, int max)
 }
 
 
-float StdUtils_checkDbl(char *str, int buffSize, int min, int max)
+float StdUtils_isDblFromInput(char *str, int buffSize, int min, int max)
 {
 	/**
 	 * Validate input is a double

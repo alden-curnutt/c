@@ -24,7 +24,7 @@ void calcSurfaceArea()
 
 	do {
 		printf("Enter a circle radius\n>");
-		dblChoice = validateDbl(userChoice, MAX_CHOICE_LEN, 1, 1);
+		dblChoice = StdUtils_isDblFromInput(userChoice, MAX_CHOICE_LEN, 1, 1);
 	} while ( dblChoice == 0.0 );
 
 	area = PI * (dblChoice * dblChoice);

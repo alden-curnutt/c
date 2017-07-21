@@ -3,7 +3,7 @@
 	<name>comp_one</name>
 	<comment></comment>
 	<projects>
-		<project>utils</project>
+		<project>StdUtils</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

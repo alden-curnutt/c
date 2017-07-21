@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "util.h"
+#include "StdUtils.h"
 
 #include "CalcSquareVolume.h"
 #include "CalcSurfaceArea.h"

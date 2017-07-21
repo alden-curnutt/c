@@ -26,7 +26,7 @@ void SocketUtils_checkPort( char **argv, long *port_no )
 	/**
 	 * validating port in range
 	 */
-	if ( (*port_no = StdUtils_checkInt(argv[1], PORT_LEN, 1025, 65535)) == 0 )
+	if ( (*port_no = StdUtils_isInt(argv[1], PORT_LEN, 1025, 65535)) == 0 )
 		exit(1);
 }
 

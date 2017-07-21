@@ -18,5 +18,6 @@
 //#include "util.h"
 
 #define MAX_CONN 10
+#define BUFFER 10
 
 #endif /* MAIN_H_ */

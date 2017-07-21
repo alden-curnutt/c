@@ -24,11 +24,14 @@ endif
 # All Target
 all: comp_one
 
+dependents:
+	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) all
+
 # Tool invocations
-comp_one: $(OBJS) $(USER_OBJS)
+comp_one: $(OBJS) $(USER_OBJS) /home/acurnutt/workspace/StdUtils/Debug/libStdUtils.a
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -static -o "comp_one" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc -static -L"/home/acurnutt/workspace/StdUtils/Debug" -o "comp_one" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -39,5 +42,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
+/home/acurnutt/workspace/StdUtils/Debug/libStdUtils.a:
 
 -include ../makefile.targets

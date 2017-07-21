@@ -24,13 +24,13 @@ void diceRoller()
 	// getting # of dice
 	do {
 		printf("How many dice will you roll? [Bounds: min|1    max|99]\n> ");
-		dice = (validateInt(userChoice, MAX_CHOICE_LEN, 1, 99));
+		dice = (StdUtils_isIntFromInput(userChoice, MAX_CHOICE_LEN, 1, 99));
 	} while ( dice == 0 );
 
 	// getting # of sides per die
 	do {
 		printf("How many sides will each dice have? [Bounds: min|1    max|99]\n>");
-		sides = (validateInt(userChoice, MAX_CHOICE_LEN, 1, 99));
+		sides = (StdUtils_isIntFromInput(userChoice, MAX_CHOICE_LEN, 1, 99));
 	} while ( sides == 0 );
 
 	// lol
@@ -40,7 +40,7 @@ void diceRoller()
 	// getting # of rolls
 	do {
 		printf("How many times will you roll? [Bounds: min|1    max|99]\n>");
-		rolls = (validateInt(userChoice, MAX_CHOICE_LEN, 1, 99));
+		rolls = (StdUtils_isIntFromInput(userChoice, MAX_CHOICE_LEN, 1, 99));
 	} while ( rolls == 0 );
 
 	printf("Dice: %ld      Sides: %ld      Rolls: %ld\n", dice, sides, rolls);
