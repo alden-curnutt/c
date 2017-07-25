@@ -37,7 +37,7 @@ long StdUtils_isInt(char *str, int buffSize, int min, int max)
 	if ( result != 0 )
 	{
 		if ( result < min || result > max ) {
-			printf("Entry is not a valid option\n");
+			printf("Entry is not a valid option ");
 			return 0;
 		}
 		else
@@ -45,7 +45,7 @@ long StdUtils_isInt(char *str, int buffSize, int min, int max)
 	}
 	else
 	{
-		printf("Entry is not a valid option\n");
+		printf("Entry is not a valid option ");
 		return 0;
 	}
 }

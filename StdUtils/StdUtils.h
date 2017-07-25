@@ -9,7 +9,7 @@
 #define STDUTILS_H_
 
 void StdUtils_flushStdin( char *str );
-long StdUtils_isInt();
+long StdUtils_isInt(char *str, int buffSize, int min, int max);
 long StdUtils_isIntFromInput();
 float StdUtils_isDblFromInput(char *str, int buffSize, int min, int max);
 

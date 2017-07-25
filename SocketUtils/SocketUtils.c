@@ -8,26 +8,44 @@
 #include "SocketUtils.h"
 
 
-void SocketUtils_countArgs( int argc )
+void SocketUtils_countArgs( int argc, int requiredCount, char msg[] )
 {
 	/**
 	 * testing argument count
 	 */
-	if ( argc != 2 )
+	if ( argc != requiredCount )
 	{
-		printf("Usage: comp_two [port]\n");
+		printf("%s", msg);
 		exit(1);
 	}
 }
 
 
-void SocketUtils_checkPort( char **argv, long *port_no )
+void SocketUtils_validatePort( char *argv, long *port_no, long min, long max )
 {
 	/**
 	 * validating port in range
+	 *     exits execution if port is not valid
 	 */
-	if ( (*port_no = StdUtils_isInt(argv[1], PORT_LEN, 1025, 65535)) == 0 )
+	if ( (*port_no = StdUtils_isInt(argv, PORT_LEN, min, max)) == 0 )
+	{
+		printf("[port]\n");
 		exit(1);
+	}
+}
+
+
+void SocketUtils_validateAddress( char *argv, in_addr address )
+{
+	/**
+	 * validating port in range
+	 *     exits execution if port is not valid
+	 */
+//	if ( (*port_no = StdUtils_isInt(argv, PORT_LEN, min, max)) == 0 )
+//	{
+//		printf("[port]\n");
+//		exit(1);
+//	}
 }
 
 

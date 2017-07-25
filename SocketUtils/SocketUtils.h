@@ -17,8 +17,8 @@
 
 #define PORT_LEN 4
 
-void SocketUtils_countArgs( int argc );
-void SocketUtils_checkPort( char **argv, long *port );
-void SocketUtils_createSocket(int *sock_fd);
+void SocketUtils_countArgs( int argc, int requiredCount, char msg[] );
+void SocketUtils_validatePort( char *argv, long *port,  long min, long max );
+void SocketUtils_createSocket( int *sock_fd );
 
 #endif /* SOCKETUTILS_H_ */
