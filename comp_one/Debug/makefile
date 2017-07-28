@@ -25,7 +25,7 @@ endif
 all: comp_one
 
 dependents:
-	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) clean all
+	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) all
 
 # Tool invocations
 comp_one: $(OBJS) $(USER_OBJS) /home/acurnutt/workspace/StdUtils/Debug/libStdUtils.a

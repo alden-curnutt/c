@@ -35,7 +35,7 @@ void SocketUtils_validatePort( char *argv, long *port_no, long min, long max )
 }
 
 
-void SocketUtils_validateAddress( char *argv, in_addr address )
+void SocketUtils_validateAddress( char *argv, char address )
 {
 	/**
 	 * validating port in range
