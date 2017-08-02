@@ -10,9 +10,12 @@
 int main(int argc, char **argv)
 {
 	long port_no = 0; // end point for user's input
-	int server_fd = 0, client_fd = 0, data_size = 0;
+	int server_fd = 0,
+	    client_fd = 0,
+		data_size = 0;
 	socklen_t client_len;
-	struct sockaddr_in server_addr, client_addr;
+	struct sockaddr_in server_addr,
+	                   client_addr;
 	char* buffer = {0};
 
 	SocketUtils_countArgs(argc, 2, "Usage: comp_two_server [port]\n");

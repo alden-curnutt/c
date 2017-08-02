@@ -35,17 +35,17 @@ void SocketUtils_validatePort( char *argv, long *port_no, long min, long max )
 }
 
 
-void SocketUtils_validateAddress( char *argv, char address )
+void SocketUtils_validateAddress( char *argv, char *address )
 {
 	/**
-	 * validating port in range
+	 * validating ip address input
 	 *     exits execution if port is not valid
 	 */
-//	if ( (*port_no = StdUtils_isInt(argv, PORT_LEN, min, max)) == 0 )
-//	{
-//		printf("[port]\n");
-//		exit(1);
-//	}
+	if ( (inet_pton(AF_INET, *address, )) != NULL )
+	{
+		printf("[port]\n");
+		exit(1);
+	}
 }
 
 
