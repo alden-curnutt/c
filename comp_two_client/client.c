@@ -11,19 +11,66 @@ int main( int argc, char **argv )
 {
 	int sock_fd;
 	long port_no = 0; // end point for user's input
-	struct sockaddr_in server_addr,
-		               client_addr;
+	struct sockaddr_in server_addr;
 
+	char *buffer;
+	size_t bufsize = 0;
+	size_t message;
+	int valread;
 
 
 	SocketUtils_countArgs(argc, 3, "Usage: comp_two_server [valid ip_v4 address] [port]\n");
 
 
-	SocketUtils_validateAddress( argv[2], &server_addr, 1025, 65535 );
+	/**
+	 * Validate ip address
+	 */
+	if (inet_pton( AF_INET, argv[1], &(server_addr.sin_addr) ) <= 0)
+	{
+		printf("error converting addy\n");
+		exit(1);
+	}
+
+	/**
+	 * Validate port number
+	 */
+	SocketUtils_validatePort( argv[2], &port_no, 1, 1024 );
+	server_addr.sin_family = AF_INET;
+	server_addr.sin_port = htons(port_no);
+
+	/**
+	 * User input
+	 */
+	message = getline( &buffer, &bufsize, stdin );
+
+	printf("%s\n", buffer);
+	printf("size of message was %zu\n", message);
 
 
-	//SocketUtils_validatePort( argv[1], &port_no, 1, 1024 );
+	/**
+	 * Create client socket
+	 */
+	SocketUtils_createSocket(&sock_fd);
 
 
-	//SocketUtils_createSocket(&sock_fd);
+	if (connect(sock_fd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0 )
+	{
+		perror("connection failed");
+
+	}
+
+
+	send(sock_fd , buffer , strlen(buffer) , 0 );
+	read( sock_fd , buffer, 1024);
+	printf("%s\n", buffer);
 }
+
+
+
+
+
+
+
+
+
+

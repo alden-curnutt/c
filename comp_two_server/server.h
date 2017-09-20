@@ -22,6 +22,7 @@
 #define MAX_CONN 10
 #define BUFFER 10
 #define NEWLINE '\n'
-
+#define TRUE 1
+#define FALSE 0
 
 #endif /* MAIN_H_ */

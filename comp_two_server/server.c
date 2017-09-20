@@ -18,6 +18,11 @@ int main(int argc, char **argv)
 	                   client_addr;
 	char* buffer = {0};
 
+	char *message = "┌──────────────────────┐\n│  Comp 2 Echo Server  │\n├──────────────────────┤\n│   Echo some stuff!   │\n└──────────────────────┘\n";
+
+
+
+
 	SocketUtils_countArgs(argc, 2, "Usage: comp_two_server [port]\n");
 	SocketUtils_validatePort( argv[1], &port_no, 1, 1024 );
 
@@ -62,6 +67,7 @@ int main(int argc, char **argv)
 		int i = 0;
 
 
+
 		if ( (client_fd = accept(server_fd, (struct sockaddr *) &client_addr, &client_len)) < 0 )
 		{
 			/**
@@ -72,6 +78,8 @@ int main(int argc, char **argv)
 		}
 
 
+		send(client_fd , message , strlen(message) , 0 );
+		printf("done with stuff\n");
 
 		while (1)
 		{
