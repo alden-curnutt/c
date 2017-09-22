@@ -16,7 +16,6 @@ int main( int argc, char **argv )
 	char *buffer;
 	size_t bufsize = 0;
 	size_t message;
-	int valread;
 
 
 	SocketUtils_countArgs(argc, 3, "Usage: comp_two_server [valid ip_v4 address] [port]\n");
@@ -38,13 +37,7 @@ int main( int argc, char **argv )
 	server_addr.sin_family = AF_INET;
 	server_addr.sin_port = htons(port_no);
 
-	/**
-	 * User input
-	 */
-	message = getline( &buffer, &bufsize, stdin );
 
-	printf("%s\n", buffer);
-	printf("size of message was %zu\n", message);
 
 
 	/**
@@ -60,9 +53,36 @@ int main( int argc, char **argv )
 	}
 
 
-	send(sock_fd , buffer , strlen(buffer) , 0 );
-	read( sock_fd , buffer, 1024);
-	printf("%s\n", buffer);
+	printf("Successful connection to server\n\n");
+
+	while (1)
+	{
+		printf("starting while loop\n");
+		/**
+		 * User input
+		 */
+		printf("\n> ");
+
+		buffer = NULL;
+
+		printf("before getline\n");
+		message = getline( &buffer, &bufsize, stdin );
+		printf("after getline\n");
+		//printf("%s\n", buffer);
+		//printf("size of message was %zu\n", message);
+
+
+		printf("before send\n");
+		send(sock_fd , buffer , strlen(buffer) , 0 );
+		printf("after send\n");
+
+		printf("before read\n");
+		read( sock_fd , buffer, 1024);
+		printf("after read\n");
+		printf("%s\n", buffer);
+
+		printf("ending while loop\n");
+	}
 }
 
 
