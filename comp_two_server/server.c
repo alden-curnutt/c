@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 	long port_no = 0; // end point for user's input
 	int server_fd = 0,
 	    client_fd = 0,
+		err = 0,
 		data_size = 0;
 	socklen_t client_len;
 	struct sockaddr_in server_addr,
@@ -24,7 +25,7 @@ int main(int argc, char **argv)
 
 
 	SocketUtils_countArgs(argc, 2, "Usage: comp_two_server [port]\n");
-	SocketUtils_validatePort( argv[1], &port_no, 1, 1024 );
+	SocketUtils_validatePort( argv[1], &port_no, 1, 65535 );
 
 	// filling serv_addr w / server info
 	server_addr.sin_family = AF_INET;
@@ -78,17 +79,27 @@ int main(int argc, char **argv)
 		}
 
 
-		send(client_fd , message , strlen(message) , 0 );
-		printf("done with stuff\n");
+		//send(client_fd, message, strlen(message), 0 );
 
 		while (1)
 		{
+			printf("at top of first while loop\n");
+
 			char* tempBuff = NULL;
+
+			buffer[0] = 0;
+			buffer = (char *)calloc(BUFFER, sizeof(char));
+
 
 			while ( 1 )
 			{
+
+				printf("starting, message is: %s\n", buffer);
+
+				printf("---\nWaiting for chat\n");
 				data_size = recv(client_fd, buffer+(BUFFER*i), BUFFER, 0);
 
+				printf("message: %s\n", buffer);
 				if ( data_size <= 0 )
 				{
 					perror("Error reading client data\n");
@@ -104,21 +115,32 @@ int main(int argc, char **argv)
 				i++;
 				tempBuff = (char*)realloc(buffer, currentBufferSize += BUFFER);
 
-				if(tempBuff != NULL){
+				if(tempBuff != NULL) {
 					buffer = tempBuff;
 					tempBuff = NULL;
 					free(tempBuff);
+
 				}
 				else
 					perror("Reallocation failed.\n");
 
+
+
+
 				if ( strchr(buffer, NEWLINE) )
 					break;
+				//break;
 			}
 
 			printf("after loop: %s\n", buffer);
 
-			break;
+			err = send(client_fd, buffer, strlen(buffer), 0 );
+			if ( err < 0 )
+				perror("send failed\n");
+			else
+				printf("Message sent\n");
+
+
 
 		}
 
