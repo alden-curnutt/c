@@ -19,10 +19,11 @@
 #include "StdUtils.h"
 #include "SocketUtils.h"
 
-#define MAX_CONN 10
 #define BUFFER 10
 #define NEWLINE '\n'
 #define TRUE 1
 #define FALSE 0
+#define MIN_PORT 1025
+#define MAX_PORT 65535
 
 #endif /* MAIN_H_ */

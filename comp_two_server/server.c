@@ -9,138 +9,137 @@
 
 int main(int argc, char **argv)
 {
-	long port_no = 0; // end point for user's input
-	int server_fd = 0,
-	    client_fd = 0,
+	//TODO - use camelCase for variable names | done
+	long portNo = 0;
+	int serverFd = 0,
+		clientFd = 0,
 		err = 0,
-		data_size = 0;
-	socklen_t client_len;
-	struct sockaddr_in server_addr,
-	                   client_addr;
-	char* buffer = {0};
-
-	char *message = "┌──────────────────────┐\n│  Comp 2 Echo Server  │\n├──────────────────────┤\n│   Echo some stuff!   │\n└──────────────────────┘\n";
-
-
+		dataSize = 0;
+	//TODO - always init variables | done
+	socklen_t clientLen;
+	struct sockaddr_in serverAddr,
+					   clientAddr;
+	char* buffer = NULL;
+	char *banner = "\n\n  ┌──────────────────────┐\n│  Comp 2 Echo Server  │\n├──────────────────────┤\n│   Echo some stuff!   │\n└──────────────────────┘\n";
 
 
 	SocketUtils_countArgs(argc, 2, "Usage: comp_two_server [port]\n");
-	SocketUtils_validatePort( argv[1], &port_no, 1, 65535 );
+	SocketUtils_validatePort( argv[1], &portNo, MIN_PORT, MAX_PORT ); //TODO - 65535 is MAX_PORT - define that as a macro, also do not allow reserved ports, MIN_PORT = 1024 | done
 
-	// filling serv_addr w / server info
-	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(port_no);
-	server_addr.sin_addr.s_addr = INADDR_ANY;
+	serverAddr.sin_family = AF_INET;
+	serverAddr.sin_port = htons(portNo);
+	serverAddr.sin_addr.s_addr = INADDR_ANY;
 
-	SocketUtils_createSocket(&server_fd);
+	SocketUtils_createSocket(&serverFd);
 
-
-
-	if ( (bind(server_fd, (struct sockaddr *) &server_addr, sizeof(server_addr))) < 0 )
-	{
-		/**
-		 * validating bind to socket
-		 */
-		printf("Error binding to socket.\n");
-		exit(1);
-	}
+	//TODO - put in utils, check for correct error return value, use perror when appropriate | done
+	SocketUtils_bindSocket(serverFd, serverAddr);
 
 
+	//TODO - put in utils, check for correct error return value, use perror when appropriate | done
 
-	if ( (listen(server_fd, MAX_CONN)) < 0 )
-	{
-		/**
-		 * validating listen process
-		 */
-		printf("Error listening on socket.\n");
-		exit(1);
-	}
-	printf("Listening for goodness on port: %ld\n", port_no);
+
+	SocketUtils_listen(serverFd);
+	printf("Listening for goodness on port: %ld\n", portNo);
 
 
 
 	while (1)
 	{
-		// main send / receive loop
-		client_len = sizeof(client_addr);
-		buffer = (char *)calloc(BUFFER, sizeof(char));
 		int currentBufferSize = BUFFER;
 		int i = 0;
 
+		// main send / receive loop
+		clientLen = sizeof(clientAddr);
 
 
-		if ( (client_fd = accept(server_fd, (struct sockaddr *) &client_addr, &client_len)) < 0 )
+
+		SocketUtils_acceptConnection(&clientFd, serverFd, clientAddr, clientLen);
+
+
+
+		//TODO - check for error | done
+		if ( (send(clientFd, banner, strlen(banner) + 1, 0 )) == -1 )
 		{
-			/**
-			 * validating accept of new connection
-			 */
-			printf("Error accepting new connection.\n");
+			perror("send");
 			exit(1);
 		}
 
 
-		//send(client_fd, message, strlen(message), 0 );
-
 		while (1)
 		{
-			printf("at top of first while loop\n");
 
+			//TODO - free memory that was allocated before every exit or break from scope
 			char* tempBuff = NULL;
 
-			buffer[0] = 0;
-			buffer = (char *)calloc(BUFFER, sizeof(char));
+			//TODO - error checking for calloc | done
+			if ( (buffer = (char *)calloc(BUFFER, sizeof(char))) == NULL )
+			{
+				perror("calloc");
+				exit(1);
+			}
 
+
+			i = 0;
 
 			while ( 1 )
 			{
-
-				printf("starting, message is: %s\n", buffer);
-
 				printf("---\nWaiting for chat\n");
-				data_size = recv(client_fd, buffer+(BUFFER*i), BUFFER, 0);
+				//TODO - read in one less than size of buffer to ensure that it has a null terminator
+				dataSize = recv(clientFd, buffer+(BUFFER*i), BUFFER, 0);
 
-				printf("message: %s\n", buffer);
-				if ( data_size <= 0 )
+				if ( dataSize == -1 )
 				{
-					perror("Error reading client data\n");
+					perror("recv");
 					exit(1);
 				}
-
-				if ( !data_size )
+				else if ( !dataSize )
 				{
-					perror("Done reading\n");
+					//TODO - perror does not make sense here | done
 					break;
 				}
 
+				printf("message: %s\n", buffer);
+
 				i++;
+
+				if ( strchr(buffer, NEWLINE) )
+				{
+					break;
+				}
+
 				tempBuff = (char*)realloc(buffer, currentBufferSize += BUFFER);
 
 				if(tempBuff != NULL) {
 					buffer = tempBuff;
 					tempBuff = NULL;
-					free(tempBuff);
-
 				}
 				else
+				{
 					perror("Reallocation failed.\n");
-
-
-
-
-				if ( strchr(buffer, NEWLINE) )
-					break;
-				//break;
+					free(buffer);
+					exit(EXIT_FAILURE);
+				}
+				//TODO - zero out the portion of buffer that was reallocated
 			}
 
-			printf("after loop: %s\n", buffer);
 
-			err = send(client_fd, buffer, strlen(buffer), 0 );
-			if ( err < 0 )
-				perror("send failed\n");
+
+			err = send(clientFd, buffer, strlen(buffer) + 1, 0 );
+			if ( err == -1 )
+			{
+				perror("send");
+			}
 			else
+			{
 				printf("Message sent\n");
+			}
 
 
+			//TODO - strcmp is not a safe function, use strncmp, break from loop, close clientFD as well
+			//TODO - also break from the loop when recv returns 0
+			if ( strncmp(buffer, "quit\n", err) == 0 )
+				shutdown(clientFd, SHUT_RDWR);
 
 		}
 
