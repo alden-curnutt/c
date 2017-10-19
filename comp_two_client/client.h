@@ -19,4 +19,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#define MIN_PORT 1025
+#define MAX_PORT 65535
+
 #endif /* MAIN_H_ */
