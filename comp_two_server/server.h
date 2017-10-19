@@ -10,7 +10,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <errno.h>
 #include <unistd.h>
 
@@ -21,7 +20,6 @@
 #include "SocketUtils.h"
 
 #define BUFFER 10
-#define NEWLINE '\n'
 #define TRUE 1
 #define FALSE 0
 #define MIN_PORT 1025

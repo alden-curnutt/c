@@ -22,28 +22,22 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: comp_two
-
-dependents:
-	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) all
-	-cd /home/acurnutt/workspace/SocketUtils/Debug && $(MAKE) all
+all: debug
 
 # Tool invocations
-comp_two: $(OBJS) $(USER_OBJS) /home/acurnutt/workspace/StdUtils/Debug/libStdUtils.a /home/acurnutt/workspace/SocketUtils/Debug/libSocketUtils.a
+debug: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc -L"/home/acurnutt/workspace/SocketUtils/Debug" -L"/home/acurnutt/workspace/StdUtils/Debug" -o "comp_two" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "debug" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) comp_two
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) debug
 	-@echo ' '
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/acurnutt/workspace/StdUtils/Debug/libStdUtils.a:
-/home/acurnutt/workspace/SocketUtils/Debug/libSocketUtils.a:
 
 -include ../makefile.targets

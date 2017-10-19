@@ -22,7 +22,7 @@ void StdUtils_flushStdin( char *str )
 		while(fgetc(stdin)!='\n');
 }
 
-
+//TODO - change this to return 0 or 1 for pass/fail and take in a long * to return the actual value
 long StdUtils_isInt(char *str, int buffSize, int min, int max)
 {
 	/**
@@ -34,6 +34,7 @@ long StdUtils_isInt(char *str, int buffSize, int min, int max)
 	long result = 0;
 
 	result = strtol(str, &endptr, 10);
+	//TODO - if(*endPtr != '\0' || *endPtr != '\n') redo the error checking for strtol
 	if ( result != 0 )
 	{
 		if ( result < min || result > max ) {
