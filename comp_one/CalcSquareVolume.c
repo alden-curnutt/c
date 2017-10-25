@@ -33,6 +33,5 @@ void calcVolume()
 
 	record(volume, 2); // record volume in file
 
-	//TODO: Remove while loop construct, remove state variable; remove printMainMenu
 	free(userChoice);
 }

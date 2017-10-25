@@ -21,5 +21,7 @@
 
 #define MIN_PORT 1025
 #define MAX_PORT 65535
+#define COLOR_GREEN "\x1b[32m"
+#define COLOR_RESET "\x1b[0m"
 
 #endif /* MAIN_H_ */

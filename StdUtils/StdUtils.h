@@ -8,8 +8,10 @@
 #ifndef STDUTILS_H_
 #define STDUTILS_H_
 
+#include <errno.h>
+
 void StdUtils_flushStdin( char *str );
-long StdUtils_isInt(char *str, int buffSize, int min, int max);
+int StdUtils_isInt(long *portNo, char *str, int buffSize, int min, int max);
 long StdUtils_isIntFromInput();
 float StdUtils_isDblFromInput(char *str, int buffSize, int min, int max);
 

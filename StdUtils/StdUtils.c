@@ -22,27 +22,34 @@ void StdUtils_flushStdin( char *str )
 		while(fgetc(stdin)!='\n');
 }
 
-//TODO - change this to return 0 or 1 for pass/fail and take in a long * to return the actual value
-long StdUtils_isInt(char *str, int buffSize, int min, int max)
+
+
+int StdUtils_isInt(long *portNo, char *str, int buffSize, int min, int max)
 {
 	/**
 	 * Validate input is a long
 	 *     if valid, return the long value
 	 *     if invalid, return 0
 	 */
-	char *endptr = NULL;
-	long result = 0;
+	char *endPtr = NULL;
 
-	result = strtol(str, &endptr, 10);
-	//TODO - if(*endPtr != '\0' || *endPtr != '\n') redo the error checking for strtol
-	if ( result != 0 )
+	*portNo = strtol(str, &endPtr, 0);
+
+	if ( *endPtr != '\0' && *endPtr != '\n' )
 	{
-		if ( result < min || result > max ) {
+		 printf("Entry is invalid ");
+		 return 0;
+	}
+	if ( *portNo != 0 )
+	{
+		if ( *portNo < min || *portNo > max ) {
 			printf("Entry is not a valid option ");
 			return 0;
 		}
 		else
-			return result;
+		{
+			return 1;
+		}
 	}
 	else
 	{
@@ -50,6 +57,7 @@ long StdUtils_isInt(char *str, int buffSize, int min, int max)
 		return 0;
 	}
 }
+
 
 
 long StdUtils_isIntFromInput(char *str, int buffSize, int min, int max)
@@ -82,6 +90,7 @@ long StdUtils_isIntFromInput(char *str, int buffSize, int min, int max)
 		return 0;
 	}
 }
+
 
 
 float StdUtils_isDblFromInput(char *str, int buffSize, int min, int max)

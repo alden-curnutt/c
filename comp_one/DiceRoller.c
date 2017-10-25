@@ -56,8 +56,5 @@ void diceRoller()
 		}
 		printf("\n\n");
 	}
-	//TODO: remove circular references to printMainMenu; keep that inside main
-	//TODO: fix use after free bug created by this free inside while loop.  While loop itself is not necessary here since you are only running this one time.
-	//TODO: state is an unnecessary variable, use while(1) instead and break when you need out of the loop
 	free(userChoice);
 }

@@ -32,6 +32,5 @@ void calcSurfaceArea()
 
 	record(area, 1);
 
-	//TODO:  Dont need a while loop, remove state variable
 	free(userChoice);
 }

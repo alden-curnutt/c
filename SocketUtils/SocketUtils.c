@@ -21,13 +21,13 @@ void SocketUtils_countArgs( int argc, int requiredCount, char msg[] )
 }
 
 
-void SocketUtils_validatePort( char *argv, long *port_no, long min, long max )
+void SocketUtils_validatePort( char *argv, long *portNo, long min, long max )
 {
 	/**
 	 * validating port in range
 	 *     exits execution if port is not valid
 	 */
-	if ( (*port_no = StdUtils_isInt(argv, PORT_LEN, min, max)) == 0 )
+	if ( (StdUtils_isInt(portNo, argv, PORT_LEN, min, max)) == 0 )
 	{
 		printf("[port]\n");
 		exit(1);
@@ -44,7 +44,7 @@ void SocketUtils_createSocket(int *sock_fd)
 	if ( (*sock_fd = socket(AF_INET, SOCK_STREAM, 0)) == -1 )
 	{
 		perror("socket");
-		exit(EXIT_FAILURE); //TODO - macro
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -104,7 +104,6 @@ void SocketUtils_receiveUnknownData( char **buffer, int *clientFd )
 	    currentBufferSize = BUFFER,
 	    increment = 0;
 
-	//TODO - error checking for calloc | done
 	if ( (*buffer = (char *)calloc(BUFFER, sizeof(char))) == NULL )
 	{
 		perror("calloc");
@@ -115,17 +114,21 @@ void SocketUtils_receiveUnknownData( char **buffer, int *clientFd )
 	{
 		dataSize = recv(*clientFd, *buffer+(BUFFER*i), BUFFER, 0);
 
-		if ( dataSize == -1 )
+		if ( dataSize == 0 || dataSize == -1 )
+		{
+			free(buffer);
+			buffer = NULL;
+		}
+
+		if ( dataSize == 0 )
+		{
+			printf("Closing connection\n");
+			break;
+		}
+		else if ( dataSize == -1 )
 		{
 			perror("recv");
-			free(buffer);
 			exit(EXIT_FAILURE);
-		}
-		else if ( !dataSize /*dataSize > 0*/)
-		{
-			//TODO - perror does not make sense here | done
-			free(buffer);
-			break;
 		}
 
 		i++;
@@ -138,7 +141,6 @@ void SocketUtils_receiveUnknownData( char **buffer, int *clientFd )
 		tempBuff = (char*)realloc(*buffer, currentBufferSize += BUFFER);
 		increment += BUFFER;
 
-		//TODO - zero out the portion of buffer that was reallocated | done
 		memset( (buffer + increment) + 1, 0, BUFFER );
 
 		if(tempBuff != NULL) {
@@ -147,9 +149,8 @@ void SocketUtils_receiveUnknownData( char **buffer, int *clientFd )
 		}
 		else
 		{
-			//TODO - free memory that was allocated before every exit or break from scope | done
 			free(buffer);
-			buffer = NULL; // good practice to NULL pointers after freeing them
+			buffer = NULL;
 			exit(EXIT_FAILURE);
 		}
 	}

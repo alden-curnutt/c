@@ -33,12 +33,9 @@ int main()
 	time_t t;
 	srand((unsigned) time(&t)); // seeding srand
 
-	// TODO: allocate space for userChoice
-	// TODO: learn about TO DO's.
 	system("clear");
 
 	while( 1 )
-	//TODO:  change to while(1) and use a break to escape loop
 	{
 		printMainMenu();
 
@@ -68,7 +65,6 @@ int main()
 
 				free(userChoice);
 				exit(0);
-				//TODO: Use break! and Call Exit.
 		}
 	}
 }

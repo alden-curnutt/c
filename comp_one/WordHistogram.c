@@ -24,10 +24,10 @@ void calcHistogram()
 	wordLength = (char *)calloc(MAX_CHOICE_LEN, sizeof(char));
 
 	while ((c = getchar()) != EOF) {
-		if (c == ' ' || c == '\t' || c == '\n' ) {  //TODO:  Check for '\r' as well since its used in Windows and windows like things
+		if (c == ' ' || c == '\t' || c == '\n' ) {
 			if (inWord == TRUE) {
 				if (count <= MAX_CHOICE_LEN) // if word is larger than MAX_CHOICE_LEN
-					wordLength[count-1]++;   //TODO: Off-by-One bug
+					wordLength[count-1]++;
 				else
 					wordLength[MAX_CHOICE_LEN]++;
 				inWord = FALSE;
