@@ -25,8 +25,8 @@ endif
 all: c3server
 
 dependents:
-	-cd /home/acurnutt/workspace/SocketUtils/Debug && $(MAKE) clean all
-	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) clean all
+	-cd /home/acurnutt/workspace/SocketUtils/Debug && $(MAKE) all
+	-cd /home/acurnutt/workspace/StdUtils/Debug && $(MAKE) all
 
 # Tool invocations
 c3server: $(OBJS) $(USER_OBJS) /home/acurnutt/workspace/SocketUtils/Debug/libSocketUtils.a /home/acurnutt/workspace/StdUtils/Debug/libStdUtils.a

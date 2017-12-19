@@ -1,5 +1,8 @@
-server.d: ../server.c /home/acurnutt/workspace/StdUtils/StdUtils.h \
+server.d: ../server.c ../server.h \
+ /home/acurnutt/workspace/StdUtils/StdUtils.h \
  /home/acurnutt/workspace/SocketUtils/SocketUtils.h
+
+../server.h:
 
 /home/acurnutt/workspace/StdUtils/StdUtils.h:
 

@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lStdUtils -lSocketUtils
+LIBS := -lSocketUtils -lStdUtils
 
