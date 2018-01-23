@@ -7,8 +7,6 @@
 
 #include "stringp.h"
 
-
-
 /*
  * myStrlen notes:
  * This is an extremely easy function to code. It can be done in as little as three lines.
@@ -16,33 +14,21 @@
  * simple as possible while still being fully functional.
  */
 
-/// TODO 6) Define myStrlen() here
-/*copy your myStrlen prototype here{*/
+/// TODO 6) Define myStrlen() here | done
 
 size_t myStrlen( char *ptr )
 {
 	/// TODO 7) Declare and initialize the return variable | done
 	size_t bytes = 0;
-	int x = 42;
-
-	int *y = (int *)ptr;
-	x = *y;
 
 	/// TODO 8) Calculate the size of your string | done
-	while (1)
+	while ( *ptr != '\0' )
 	{
-		//if ( ptr[bytes] == '\0' )
-		if ( *ptr == '\0' )
-		{
-			break;
-		}
-		else {
-			bytes = bytes + 1;
-			ptr = ptr + 1;
-		}
+		bytes = bytes + 1;
+		ptr = ptr + 1;
 	}
 	/// TODO 9) Return the size. | done
-	return bytes;
+	return bytes + 1;
 }
 
 
@@ -56,17 +42,24 @@ size_t myStrlen( char *ptr )
  * Hint: Your myStrlen() function may be useful here...
  */
 
-/// TODO 10) Define myStrncpy() here
-/*copy your myStrncpy prototype here{*/
+/// TODO 10) Define myStrncpy() here | done
 
-	/// TODO 11) Declare and initialize the counter and max number of characters to copy.
+/// TODO 11) Declare and initialize the counter and max number of characters to copy. | done
 
-	/// TODO 12) Set the maximum number of characters to copy. *hint* You can use your myStrlen function.
+/// TODO 12) Set the maximum number of characters to copy. *hint* You can use your myStrlen function. | done
 
-	/// TODO 13) Perform the copy.
+/// TODO 13) Perform the copy. | done
 
-	/// TODO 14) What do we return? Refer to your .h file.
-//}
+/// TODO 14) What do we return? Refer to your .h file. | done
+char * myStrncpy( char *destStringPtr, const char* sourceStringPtr, size_t numBytesToCpy )
+{
+	for ( int i = 0; i < numBytesToCpy; i++ )
+	{
+		destStringPtr[i] = sourceStringPtr[i];
+	}
+
+	return destStringPtr;
+}
 
 
 
@@ -74,43 +67,45 @@ int main(void){
 	char myStr[] = "Hello";
 
 	/// TODO 3) Declare and initialize a char pointer to a destination string | done
-	char *ptr;
+	char *destPtr = NULL;
 	size_t numBytes = 0;
+
 
 	// Some diagnostics. Print out the string.
 	// Print out both strlen outputs for comparison.
 	printf("String: %s\n", myStr);
 	printf("Strlen: %u\n", (unsigned int)strlen(myStr));
 
+
 	numBytes = myStrlen(myStr);
 
-	printf("MyStrlen (numBytes): %lu\n", numBytes);
 
+	printf("MyStrlen (numBytes): %lu (includes %c%d)\n", numBytes, '\\', 0);
 
 
 	/// TODO 4) Allocate and clear space for the destination string.
-	///			DON'T FORGET TO CAST.
-	// (cast)calloc(...)
+	destPtr = (char *)calloc(numBytes, sizeof(char));
+	if ( destPtr == NULL )
+	{
+		perror("calloc");
+		exit(EXIT_FAILURE);
+	}
 
-	ptr = (char *)calloc(numBytes, sizeof(char));
-	printf("size of ptr: %lu\n", sizeof(ptr));
-	printf("size of myStr: %lu\n", sizeof(myStr));
+	printf("destPtr value before myStrncpy: %s\n", destPtr);
+	myStrncpy( destPtr, myStr, numBytes );
 
-	/// TODO Error checking. (replace /*buffer*/)
-//	if(!/*buffer*/){
-//		printf("Calloc failed\n");
-//		exit(EXIT_FAILURE);
-//	}
+	printf("destPtr value after cpy: %s\n", destPtr);
 
-	/// TODO 5) Test your string copy. Replace "dest" with the name of your pointer.
+	/// TODO 5) Test your string copy. Replace "dest" with the name of your pointer. | done
 	// dest = myStrncpy(dest, myStr, myStrlen(myStr));
 	// printf("Dest: %s\n", dest);
+	/// TODO 6) Free and NULL your pointer. | done
 
-	/// TODO 6) Free and NULL your pointer.
-
+	free(destPtr);
+	destPtr = NULL;
 
 	return 0;
-} // main
+} // end main
 
 
 
