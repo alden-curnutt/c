@@ -10,15 +10,26 @@
 int main(){
 
 	// signal handler, ignore this
-	signal(SIGINT, signalHandler);
+	//signal(SIGINT, signalHandler);
 
-	/// TODO 2) Declare and initialize to NULL a char pointer to our buffer, and a size variable
+	/// TODO 2) Declare and initialize to NULL a char pointer to our buffer, and a size variable | done
+	char *buffer = NULL;
+	size_t bytesRead = 0;
+
+	int x = 1;
+
+	while( x == 1){
+
+		buffer = NULL;
+		bytesRead = 0;
 
 
-	while(1){
+		//printf("Enter text: "); // prompt
 
-		printf("Enter text: "); // prompt
+		printf("in main, &buffer: %p\n", &buffer);
+		printf("in main, buffer: %s\n", buffer);
 
+		bytesRead = myGetLine( &buffer, bytesRead  );
 		/// TODO 4) Test myGetLine by passing in an address to your pointer,
 		///			thus "converting" it to a double pointer, and a pointer to your int
 		// myGetLine(...);
@@ -29,6 +40,7 @@ int main(){
 		/// TODO 6) Don't forget to free and NULL your buffer afterwards.
 		// free(...);
 
+		x = x + 1;
 	}
 
 	return EXIT_SUCCESS;
@@ -47,77 +59,95 @@ int main(){
  *
  */
 
-/// TODO 3) Define myGetLine() here
-/*copy your myGetLine prototype here*/{
+/// TODO 3) Define myGetLine() here | done
+/*copy your myGetLine prototype here*/
+size_t myGetLine( char **buffer, unsigned int bytesRead )
+{
+
 	/// Conceptual question: Why do we use a double pointer???
-	int bytesRead = 0;
-	char * temp = NULL; // temp pointer for realloc error checking
+		/// A: so that the myGetLine function can store the string from stdin
+		///    while also returning the num bytes read
+	printf("in func, &buffer: %p\n", &buffer);
+	printf("in func, buffer: %s\n", *buffer);
+	printf("in func, *buffer: %p\n", *buffer);
 
 
-	if(*buf == NULL || *bufSize < INIT_SIZE){
+
+	//int bytesRead = 0;
+	//char * temp = NULL; // temp pointer for realloc error checking
+
+
+
+	//if(*buf == NULL || *bufSize < INIT_SIZE){
 		/// TODO A) Allocate INIT_SIZE bytes to your buffer.
 		///			DON'T FORGET TO CAST.
 		// (cast)calloc(...);
 
 		/// TODO B) Error checking (replace "/*buffer*/")
-		if(!/*buffer*/){
-			exitOnFailure("Calloc fail!", /*buffer*/);
-		}
-		*bufSize = INIT_SIZE;
-	}
+		//if(!/*buffer*/){
+		//	exitOnFailure("Calloc fail!", /*buffer*/);
+		//}
+		//*bufSize = INIT_SIZE;
+	//}
 
 	// loop until we get the newline
-	do{
+	//do{
 		/// TODO C) Combined read from stdin and error checking
-		if(!fgets((/*buffer*/ + bytesRead), INIT_SIZE, stdin)){
-			exitOnFailure("fgets() fail!", /*buffer*/);
-		} // read in from stdin, exit on failure or unexpected EOF
+		//if(!fgets((/*buffer*/ + bytesRead), INIT_SIZE, stdin)){
+			//exitOnFailure("fgets() fail!", /*buffer*/);
+		//} // read in from stdin, exit on failure or unexpected EOF
 
 		/// TODO D) Look for newline in our buffer
-		if(!strchr(/*buffer*/, '\n')){ // replace with the correct usage of "buf"
+		//if(!strchr(/*buffer*/, '\n')){ // replace with the correct usage of "buf"
 
-			bytesRead = strlen(/*buffer*/);
-			*bufSize += INIT_SIZE;
+			//bytesRead = strlen(/*buffer*/);
+			//*bufSize += INIT_SIZE;
 
 			/// TODO E) Realloc, using temp to store a pointer to the buf for error checking.
 			///			Dereference bufSize to use as a new size to realloc.
 			// temp = (cast)realloc(...);
 
 			/// TODO F) Error checking
-			if(!temp){
-				exitOnFailure("realloc() fail!", /*buffer*/);
-			} // if realloc fail
+			//if(!temp){
+			//	exitOnFailure("realloc() fail!", /*buffer*/);
+			//} // if realloc fail
 
 			/// TODO G) Set our buffer to point to the same memory that temp is pointer to
-			/*buffer*/ = temp;
+			/*buffer*/ //= temp;
 
 			/// TODO H) Zero out the memory here.
 			///			Extra credit: Why do we do this?
-			bzero((/*buffer*/ + bytesRead), (size_t)INIT_SIZE);
+			//bzero((/*buffer*/ + bytesRead), (size_t)INIT_SIZE);
 
-		} // if
+		//} // if
 
 
-		else{
+		//else{
 			/// TODO I) If newline is found we'll just update bytes read
 			// bytesRead = ???
-		}
+		//}
 
-	} while(!strchr(*buf, '\n'));
+	//} while(!strchr(*buf, '\n'));
 
 	/// TODO J) Return the number of bytes read
+
+	return bytesRead;
 } // myGetLine
 
+
+
 /// @brief Exits, printing out an error message and freeing a single buffer.
-void exitOnFailure(const char * message, char * buffer){
-	printf("%s\n", message);
-	free(buffer);
-	buffer = NULL;
-	exit(EXIT_FAILURE);
-} // exitOnFailure
+//void exitOnFailure(const char * message, char * buffer){
+//	printf("%s\n", message);
+//	free(buffer);
+//	buffer = NULL;
+//	exit(EXIT_FAILURE);
+//} // exitOnFailure
+
+
 
 /// @brief Signal handler for exiting infinite while loop
-void signalHandler(int sigNum){
-	printf("\nQuitting...\n");
-	exit(0);
-} // signalHandler
+//void signalHandler(int sigNum){
+//	printf("\nQuitting...\n");
+//	exit(0);
+//} // signalHandler

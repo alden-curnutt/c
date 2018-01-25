@@ -14,11 +14,13 @@
 #include <strings.h>
 #include <signal.h>
 
-#define INIT_SIZE 60
+#define BUFFER 60
 #define SIGINT 2
-#define EXIT_SUCCESS 1
 
-/// TODO 1) Declare myGetLine prototype.
+/// TODO 1) Declare myGetLine prototype. | done
+
+size_t myGetLine( char **endString, unsigned int endSize );
+
 /*[type] myGetLine([arg1], [arg2]);
  *
  * REQUIREMENTS:

@@ -51,11 +51,13 @@ size_t myStrlen( char *ptr )
 /// TODO 13) Perform the copy. | done
 
 /// TODO 14) What do we return? Refer to your .h file. | done
-char * myStrncpy( char *destStringPtr, const char* sourceStringPtr, size_t numBytesToCpy )
+char * myStrncpy( char *destStringPtr, const char* sourceStringPtr, size_t numBytesToCpy ) // length of sourceStringPtr is less than the num of bytes to cpy
 {
 	for ( int i = 0; i < numBytesToCpy; i++ )
 	{
-		destStringPtr[i] = sourceStringPtr[i];
+		//destStringPtr[i] = sourceStringPtr[i];
+		*(destStringPtr + i) = *(sourceStringPtr + i);
+		//destStringPtr = destStringPtr + 1;
 	}
 
 	return destStringPtr;
@@ -66,9 +68,51 @@ char * myStrncpy( char *destStringPtr, const char* sourceStringPtr, size_t numBy
 int main(void){
 	char myStr[] = "Hello";
 
+	/* Int Pointer testing */
+//	int x = 5;
+//	int *xPtr = &x;
+//	int **xxPtr = &xPtr;
+//
+//
+//	printf("&x: %p\n", &x);
+//	printf("x: %d\n\n", x);
+//
+//
+//	printf("&xPtr: %p\n", &xPtr);
+//	printf("xPtr: %p\n", xPtr);
+//	printf("*xPtr: %d\n\n", *xPtr);
+//
+//
+//	printf("&xxPtr: %p\n", &xxPtr);
+//	printf("xxPtr: %p\n", xxPtr);
+//	printf("*xxPtr: %p\n", *xxPtr);
+//	printf("**xxPtr: %d\n\n", **xxPtr);
+
+	char s[] = "Hello";
+	char *sPtr = s;
+	char **ssPtr = &sPtr;
+
+	printf("&s: %p\n", &s);
+	printf("s: %s\n\n", s);
+
+
+	printf("&sPtr: %p\n", &sPtr);
+	printf("sPtr: %p\n", sPtr);
+	printf("*sPtr: %c\n", *sPtr);
+	printf("*e?: %c\n\n", *(sPtr + 1));
+
+
+	printf("&sPtr: %p\n", &ssPtr);
+	printf("sPtr: %p\n", ssPtr);
+	printf("*sPtr: %p\n", *ssPtr);
+	printf("**sPtr: %c\n", **ssPtr);
+	printf("**e?: %c\n\n", *(*ssPtr + 1));
+
+
 	/// TODO 3) Declare and initialize a char pointer to a destination string | done
 	char *destPtr = NULL;
-	size_t numBytes = 0;
+	size_t maxBytes = 4,
+           numBytes = 0;
 
 
 	// Some diagnostics. Print out the string.
@@ -77,22 +121,23 @@ int main(void){
 	printf("Strlen: %u\n", (unsigned int)strlen(myStr));
 
 
-	numBytes = myStrlen(myStr);
+
 
 
 	printf("MyStrlen (numBytes): %lu (includes %c%d)\n", numBytes, '\\', 0);
 
 
 	/// TODO 4) Allocate and clear space for the destination string.
-	destPtr = (char *)calloc(numBytes, sizeof(char));
+	destPtr = (char *)calloc(maxBytes, sizeof(char));
 	if ( destPtr == NULL )
 	{
 		perror("calloc");
 		exit(EXIT_FAILURE);
 	}
 
+
 	printf("destPtr value before myStrncpy: %s\n", destPtr);
-	myStrncpy( destPtr, myStr, numBytes );
+	myStrncpy( destPtr, myStr, maxBytes );
 
 	printf("destPtr value after cpy: %s\n", destPtr);
 
@@ -100,7 +145,6 @@ int main(void){
 	// dest = myStrncpy(dest, myStr, myStrlen(myStr));
 	// printf("Dest: %s\n", dest);
 	/// TODO 6) Free and NULL your pointer. | done
-
 	free(destPtr);
 	destPtr = NULL;
 
