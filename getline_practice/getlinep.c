@@ -14,25 +14,21 @@ int main(){
 
 	/// TODO 2) Declare and initialize to NULL a char pointer to our buffer, and a size variable | done
 	char *buffer = NULL;
-	size_t bytesRead = 0;
+	size_t buffSize = BUFFSIZE,
+           bytesRead = 0;
 
-	int x = 1;
-
-	while( x == 1){
+	while ( 1 ) {
 
 		buffer = NULL;
 		bytesRead = 0;
 
+		printf("Enter text: "); // prompt
 
-		//printf("Enter text: "); // prompt
-
-		printf("in main, &buffer: %p\n", &buffer);
-		printf("in main, buffer: %s\n", buffer);
-
-		bytesRead = myGetLine( &buffer, bytesRead  );
-		/// TODO 4) Test myGetLine by passing in an address to your pointer,
+		/// TODO 4) Test myGetLine by passing in an address to your pointer, | done
 		///			thus "converting" it to a double pointer, and a pointer to your int
 		// myGetLine(...);
+		bytesRead = myGetLine( &buffer, buffSize  );
+
 
 		/// TODO 5) Print out your buffer to test if it has input.
 		// printf(...);
@@ -40,8 +36,7 @@ int main(){
 		/// TODO 6) Don't forget to free and NULL your buffer afterwards.
 		// free(...);
 
-		x = x + 1;
-	}
+}
 
 	return EXIT_SUCCESS;
 } // main
@@ -61,20 +56,16 @@ int main(){
 
 /// TODO 3) Define myGetLine() here | done
 /*copy your myGetLine prototype here*/
-size_t myGetLine( char **buffer, unsigned int bytesRead )
+size_t myGetLine( char **buffer, unsigned int buffSize )
 {
 
 	/// Conceptual question: Why do we use a double pointer???
 		/// A: so that the myGetLine function can store the string from stdin
 		///    while also returning the num bytes read
-	printf("in func, &buffer: %p\n", &buffer);
-	printf("in func, buffer: %s\n", *buffer);
-	printf("in func, *buffer: %p\n", *buffer);
 
 
-
-	//int bytesRead = 0;
-	//char * temp = NULL; // temp pointer for realloc error checking
+	size_t bytesRead = 0;
+	char *temp = NULL; // temp pointer for realloc error checking
 
 
 

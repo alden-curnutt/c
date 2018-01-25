@@ -14,7 +14,8 @@
 #include <strings.h>
 #include <signal.h>
 
-#define BUFFER 60
+#define BUFFSIZE 60
+#define MAXBUFFSIZE 1024
 #define SIGINT 2
 
 /// TODO 1) Declare myGetLine prototype. | done
