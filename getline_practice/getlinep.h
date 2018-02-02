@@ -14,7 +14,7 @@
 #include <strings.h>
 #include <signal.h>
 
-#define BUFFSIZE 60
+#define BUFFINC 16
 #define MAXBUFFSIZE 1024
 #define SIGINT 2
 

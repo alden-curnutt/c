@@ -14,7 +14,7 @@ int main(){
 
 	/// TODO 2) Declare and initialize to NULL a char pointer to our buffer, and a size variable | done
 	char *buffer = NULL;
-	size_t buffSize = BUFFSIZE,
+	size_t buffSize = BUFFINC,
            bytesRead = 0;
 
 	while ( 1 ) {
@@ -27,6 +27,7 @@ int main(){
 		/// TODO 4) Test myGetLine by passing in an address to your pointer, | done
 		///			thus "converting" it to a double pointer, and a pointer to your int
 		// myGetLine(...);
+
 		bytesRead = myGetLine( &buffer, buffSize  );
 
 
@@ -67,6 +68,38 @@ size_t myGetLine( char **buffer, unsigned int buffSize )
 	size_t bytesRead = 0;
 	char *temp = NULL; // temp pointer for realloc error checking
 
+	printf("buffSize: %u\n", buffSize);
+
+	if ( *buffer != NULL )
+	{
+		*buffer = NULL;
+	}
+
+	if ( buffSize > 0 )
+	{
+		*buffer = (char *)calloc( buffSize, sizeof(char));
+
+		if ( buffer == NULL)
+		{
+			perror("calloc");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if ( buffSize == 0 )
+	{
+		*buffer = (char *)calloc( BUFFINC, sizeof(char));
+
+		if ( buffer == NULL)
+		{
+			perror("calloc");
+			exit(EXIT_FAILURE);
+		}
+
+		buffSize = BUFFINC;
+	}
+
+	fgets(*buffer, buffSize, stdin);
+	printf("%s\n\n", *buffer);
 
 
 	//if(*buf == NULL || *bufSize < INIT_SIZE){

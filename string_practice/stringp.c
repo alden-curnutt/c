@@ -64,6 +64,13 @@ char * myStrncpy( char *destStringPtr, const char* sourceStringPtr, size_t numBy
 }
 
 
+void printFunc(char *s)
+{
+	printf("inside function, s is: %s\n", s);
+	printf("inside function, &s is: %p\n\n", &s);
+	*s = "Hi";
+}
+
 
 int main(void){
 	char myStr[] = "Hello";
@@ -107,6 +114,15 @@ int main(void){
 	printf("*sPtr: %p\n", *ssPtr);
 	printf("**sPtr: %c\n", **ssPtr);
 	printf("**e?: %c\n\n", *(*ssPtr + 1));
+
+
+	printf("before function, s is: %s\n", s);
+	printf("before function, &s is: %p\n\n", &s);
+
+	printFunc(&s);
+
+	printf("after function, s is: %s\n", s);
+
 
 
 	/// TODO 3) Declare and initialize a char pointer to a destination string | done

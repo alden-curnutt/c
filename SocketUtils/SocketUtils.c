@@ -4,7 +4,7 @@
  *  Created on: Jul 18, 2017
  *      Author: acurnutt
  */
- 
+
 #include "SocketUtils.h"
 
 
@@ -35,6 +35,13 @@ void SocketUtils_validatePort( char *argv, long *portNo, long min, long max )
 }
 
 
+void SocketUtils_setNetOpts( struct sockaddr_in *info, int port )
+{
+	info -> sin_family = AF_INET;
+	info -> sin_port = htons(port);
+	info -> sin_addr.s_addr = INADDR_ANY;
+}
+
 
 void SocketUtils_createSocket(int *sock_fd)
 {
@@ -49,7 +56,6 @@ void SocketUtils_createSocket(int *sock_fd)
 }
 
 
-
 void SocketUtils_bindSocket(int serverFd, struct sockaddr_in server_addr)
 {
 	/**
@@ -61,7 +67,6 @@ void SocketUtils_bindSocket(int serverFd, struct sockaddr_in server_addr)
 		exit(EXIT_FAILURE);
 	}
 }
-
 
 
 void SocketUtils_listen(int serverFd)

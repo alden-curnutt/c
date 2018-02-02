@@ -21,6 +21,8 @@ struct node
 	TAILQ_ENTRY(node) nodes;
 };
 
+
+
 int main(int argc, char **argv)
 {
 	TAILQ_HEAD(head_s, node) head;
